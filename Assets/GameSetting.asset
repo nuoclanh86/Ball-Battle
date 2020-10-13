@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26f062fae2102d4fb349522c3bb9969, type: 3}
+  m_Name: GameSetting
+  m_EditorClassIdentifier: 
+  matchPerGame: 5
+  timeLimit: 140
+  maxEnergyBar: 6
+  energyRegenerationAtt: 0.5
+  energyCostAtt: 2
+  spawnTimeAtt: 0.5
+  reactivateTimeAtt: 2.5
+  normalSpeedAtt: 1.5
+  carryingSpeedAtt: 0.75
+  ballSpeedAtt: 1.5
+  energyRegenerationDef: 0.5
+  energyCostDef: 3
+  spawnTimeDef: 0.5
+  reactivateTimeDef: 4
+  normalSpeedDef: 1
+  returnSpeedDef: 2
+  detectionRangeDef: 0.35
