@@ -32,5 +32,9 @@ public class SoldierControler : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("OnCollisionEnter : " + collision.gameObject.name);
+        if (collision.gameObject.tag == "Wall")
+        {
+            this.gameObject.Kill();
+        }
     }
 }
