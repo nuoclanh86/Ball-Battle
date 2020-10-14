@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Team
+{
+    Attacker,
+    Defender
+}
+
 public class SoldierControler : MonoBehaviour
 {
-    public ConfigScriptableObject configScripttableObject;
-
-    //public GameObject wall;
-    Vector3 wallPos = new Vector3(10.0f, 0.0f, 20.0f);
-
     float reactivateTime = 0;
     float curSpeed;
     Vector3 targetMove;
     int index;
+    Team team;
+    Color AttackerColor = Color.cyan * 0.9f;    
+    Color DefenderColor = Color.red * 0.9f;
 
     // Start is called before the first frame update
     void Start()
     {
-        reactivateTime = configScripttableObject.reactivateTimeAtt;
-        curSpeed = configScripttableObject.normalSpeedAtt;
-        targetMove = wallPos;
+        reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeAtt;
+        curSpeed = GameManager.Instance.configScripttableObject.normalSpeedAtt;
+        targetMove = GameManager.Instance.GetWallTop().transform.position;
     }
 
     // Update is called once per frame
@@ -27,12 +31,35 @@ public class SoldierControler : MonoBehaviour
     {
         if (reactivateTime <= 0)
         {
-            wallPos.x = this.transform.position.x;
-            this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove,
-                                                                curSpeed * Time.deltaTime);
+            if (team == Team.Attacker)
+            {
+                targetMove.x = this.transform.position.x;
+                this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove,
+                                                                    curSpeed * Time.deltaTime);
+            }
         }
         else
+        {
             reactivateTime -= Time.deltaTime;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        Color statusColor;
+        if (team == Team.Attacker)
+        {
+            statusColor = AttackerColor;
+        }
+        else
+        {
+            statusColor = DefenderColor;
+        }
+        if (reactivateTime > 0)
+        {
+            statusColor *= 0.2f;
+        }
+        this.GetComponent<Renderer>().material.SetColor("_Color", statusColor);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -52,13 +79,9 @@ public class SoldierControler : MonoBehaviour
         targetMove = targetPos;
     }
 
-    public void SetIndex(int i)
+    public void SetSoldierInfo(int m_index, Team m_team)
     {
-        index = i;
+        index = m_index;
+        team = m_team;
     }
-    public int GetIndex()
-    {
-        return index;
-    }
-
 }
