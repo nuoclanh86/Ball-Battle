@@ -29,3 +29,4 @@ MonoBehaviour:
   normalSpeedDef: 1
   returnSpeedDef: 2
   detectionRangeDef: 0.35
+  maxArray: 100

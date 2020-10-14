@@ -31,4 +31,7 @@ public class ConfigScriptableObject : ScriptableObject
     //public float ballSpeedDef;
     public float returnSpeedDef;
     public float detectionRangeDef;
+
+    [Header("DeveloperSetting")]
+    public int maxArray;
 }
