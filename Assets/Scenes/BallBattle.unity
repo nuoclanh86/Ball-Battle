@@ -346,7 +346,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100d0b96868747a4aa315f93c3ce4218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  configScripttableObject: {fileID: 11400000, guid: e15e150a3db9a494fac09e9db667d6b5,
+    type: 2}
+  battleFieldPrefab: {fileID: 7289373435467284693, guid: 6314a5d8baf5b364c89dc9cd4f3a6985,
+    type: 3}
   soldierPrefab: {fileID: 1511133381058279029, guid: e665705c1b77ad043a7baeb048de18e2,
+    type: 3}
+  theBallPrefab: {fileID: 6306694207498365882, guid: 5509ec64e992dd64ab06810b9e69940e,
     type: 3}
 --- !u!4 &1306325379
 Transform:
