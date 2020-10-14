@@ -30,8 +30,9 @@ public class GameManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                //Instantiate(soldierPrefab, hit.point, Quaternion.identity);
-                soldierPrefab.Spawn(hit.point);
+                Vector3 spawnPos = hit.point;
+                spawnPos.y = 1.0f; // spawn on the plane
+                soldierPrefab.Spawn(spawnPos);
             }
         }
     }
