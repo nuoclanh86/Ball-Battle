@@ -5,11 +5,20 @@ using UnityEngine;
 public class SoldierAttacker : SoldierControler
 {
     Color AttackerColor = Color.cyan * 0.9f;
+    public bool isHoldTheBall = false;
 
     public void SetSoldierInfo(int m_index)
     {
         index = m_index;
         InitDefaultValue(); // reset value when spawn
+    }
+
+    protected override void InitDefaultValue()
+    {
+        reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeAtt;
+        curSpeed = GameManager.Instance.configScripttableObject.normalSpeedAtt;
+        targetMove = GameManager.Instance.GetWallTop().transform.position;
+        isHoldTheBall = false;
     }
 
     public void KillSoldiersAtt(GameObject sld)
@@ -25,6 +34,9 @@ public class SoldierAttacker : SoldierControler
         GameManager.Instance.HideTheBall();
         sld.transform.localScale *= 1.5f;
         curSpeed = GameManager.Instance.configScripttableObject.carryingSpeedAtt;
+        isHoldTheBall = true;
+        targetMove = GameManager.Instance.GetGateBaseR().transform.position;
+        sld.gameObject.tag = "SoldierBall";
     }
 
     protected override void SetSoldierMaterial(GameObject sld)
@@ -51,7 +63,7 @@ public class SoldierAttacker : SoldierControler
 
         float dist = Vector3.Distance(sld.transform.position, GameManager.Instance.GetTheBall().transform.position);
 
-        if (reactivateTime <= 0)
+        if (reactivateTime <= 0 && isHoldTheBall == false)
         {
             if (dist <= GameManager.Instance.minDistance_Soldier_Ball)
             {
@@ -66,15 +78,10 @@ public class SoldierAttacker : SoldierControler
         }
     }
 
-    protected override void InitDefaultValue()
-    {
-        reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeAtt;
-        curSpeed = GameManager.Instance.configScripttableObject.normalSpeedAtt;
-        targetMove = GameManager.Instance.GetWallTop().transform.position;
-    }
-
     protected override void ProcessCollision(Collision collision, GameObject sld)
     {
+        //Debug.Log("collision.tag = " + collision.gameObject.tag);
+        //Debug.Log("sld.tag = " + sld.gameObject.tag);
         if (collision.gameObject.tag == "Wall")
         {
             KillSoldiersAtt(sld.gameObject);
@@ -83,6 +90,10 @@ public class SoldierAttacker : SoldierControler
         if (collision.gameObject.tag == "Ball")
         {
             SoldiersAttCatchTheBall(sld.gameObject);
+        }
+        if (collision.gameObject.tag == "Soldier" && sld.gameObject.tag == "Soldier")
+        {
+            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), sld.GetComponent<Collider>());
         }
     }
 }

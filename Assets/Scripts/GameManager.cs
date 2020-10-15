@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     GameObject wallTop;
     GameObject wallMid;
     GameObject wallRight;
+    GameObject gateBaseR;
     public float minDistance_Soldier_Ball = 99999;
 
     // Start is called before the first frame update
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         wallTop     =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(1).gameObject;
         wallMid     =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(2).gameObject;
         wallRight   =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(3).gameObject;
+        gateBaseR =     battleFieldPrefab.transform.GetChild(2).gameObject;
         float deltaRange = 0.5f; // do not spawn too nearly walls
         float ran_x = Random.Range(-wallRight.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
         float ran_z = Random.Range(-wallTop.transform.position.z + deltaRange, 0.0f - deltaRange);
@@ -59,7 +61,7 @@ public class GameManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 Vector3 spawnPos = hit.point;
-                Debug.Log("spawnPos at " + spawnPos);
+                //Debug.Log("spawnPos at " + spawnPos);
                 SpawnSoldier(spawnPos);
             }
         }
@@ -83,6 +85,11 @@ public class GameManager : MonoBehaviour
     public GameObject GetTheBall()
     {
         return theBall;
+    }
+
+    public GameObject GetGateBaseR()
+    {
+        return gateBaseR;
     }
 
     public void HideTheBall()
