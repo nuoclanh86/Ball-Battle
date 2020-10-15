@@ -354,6 +354,8 @@ MonoBehaviour:
     type: 3}
   theBallPrefab: {fileID: 6306694207498365882, guid: 5509ec64e992dd64ab06810b9e69940e,
     type: 3}
+  minDistance_Soldier_Ball: 99999
+  detectionRangeDefFloat: 0
 --- !u!4 &1306325379
 Transform:
   m_ObjectHideFlags: 0
