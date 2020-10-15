@@ -40,12 +40,20 @@ public class SoldierDefender : SoldierControler
             if (nearestEnemyPos != Vector3.zero)
             {
                 targetMove = nearestEnemyPos;
+                curSpeed = GameManager.Instance.configScripttableObject.normalSpeedDef;
                 sld.transform.position = Vector3.MoveTowards(sld.transform.position, targetMove, curSpeed * Time.deltaTime);
             }
         }
         else
         {
             reactivateTime -= Time.deltaTime;
+            if (sld.transform.position != originalPos)
+            {
+                originalPos.y = sld.transform.position.y; // dont care if it's higher
+                // move back to originalPos
+                curSpeed = GameManager.Instance.configScripttableObject.returnSpeedDef;
+                sld.transform.position = Vector3.MoveTowards(sld.transform.position, originalPos, curSpeed * Time.deltaTime);
+            }
         }
     }
 
@@ -74,6 +82,7 @@ public class SoldierDefender : SoldierControler
         //Debug.Log("sld.tag = " + sld.gameObject.tag);
         if (collision.gameObject.tag == "SoldierBall")
         {
+            Debug.Log("collision with SoldierBall");
             reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeDef;
             targetMove = originalPos;
         }
