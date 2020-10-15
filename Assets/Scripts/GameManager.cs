@@ -30,9 +30,11 @@ public class GameManager : MonoBehaviour
     GameObject[] soldiersDef;
     GameObject wallTop;
     GameObject wallMid;
+    GameObject wallLeft;
     GameObject wallRight;
     GameObject gateBaseR;
     public float minDistance_Soldier_Ball = 99999;
+    public float detectionRangeDefFloat;
 
     // Start is called before the first frame update
     void Start()
@@ -40,14 +42,17 @@ public class GameManager : MonoBehaviour
         wallTop     =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(1).gameObject;
         wallMid     =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(2).gameObject;
         wallRight   =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(3).gameObject;
-        gateBaseR =     battleFieldPrefab.transform.GetChild(2).gameObject;
+        wallLeft    =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(4).gameObject;
+        gateBaseR   =   battleFieldPrefab.transform.GetChild(2).gameObject;
         float deltaRange = 0.5f; // do not spawn too nearly walls
-        float ran_x = Random.Range(-wallRight.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
+        float ran_x = Random.Range(wallLeft.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
         float ran_z = Random.Range(-wallTop.transform.position.z + deltaRange, 0.0f - deltaRange);
         theBall = Instantiate(theBallPrefab, new Vector3(ran_x, 0.5f, ran_z), Quaternion.identity);
 
         soldiersAtt = new GameObject[configScripttableObject.maxArray];
         soldiersDef = new GameObject[configScripttableObject.maxArray];
+
+        detectionRangeDefFloat = configScripttableObject.detectionRangeDef * Vector3.Distance(wallLeft.transform.position, wallRight.transform.position);
     }
 
     // Update is called once per frame
