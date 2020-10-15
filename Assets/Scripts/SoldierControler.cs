@@ -34,11 +34,7 @@ public class SoldierControler : MonoBehaviour
     {
         if (reactivateTime <= 0)
         {
-            if (team == Team.Attacker)
-            {
-                this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove,
-                                                                    curSpeed * Time.deltaTime);
-            }
+            this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
         }
         else
         {
@@ -97,6 +93,7 @@ public class SoldierControler : MonoBehaviour
             {
                 GameManager.Instance.HideTheBall();
                 this.transform.localScale *= 1.5f;
+                curSpeed = GameManager.Instance.configScripttableObject.carryingSpeedAtt;
             }
         }
     }
