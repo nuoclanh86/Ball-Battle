@@ -97,13 +97,10 @@ public class GameManager : MonoBehaviour
    
     void SpawnSoldier(Vector3 spawnPos)
     {
-        Team team;
         int i = 0;
-
         spawnPos.y = 1.0f; // spawn on the plane
         if (spawnPos.z < wallMid.transform.position.z)
         {
-            team = Team.Attacker;
             for (i = 0; i < configScripttableObject.maxArray; i++)
             {
                 if (soldiersAtt[i] == null)
@@ -112,11 +109,12 @@ public class GameManager : MonoBehaviour
                 }
             }
             soldiersAtt[i] = soldierPrefab.Spawn(spawnPos);
-            soldiersAtt[i].gameObject.GetComponent<SoldierControler>().SetSoldierInfo(i, team);
+            soldiersAtt[i].gameObject.GetComponent<SoldierDefender>().enabled = false;
+            soldiersAtt[i].gameObject.GetComponent<SoldierAttacker>().enabled = true;
+            soldiersAtt[i].gameObject.GetComponent<SoldierAttacker>().SetSoldierInfo(i);
         }
         else
         {
-            team = Team.Defender;
             for (i = 0; i < configScripttableObject.maxArray; i++)
             {
                 if (soldiersDef[i] == null)
@@ -125,7 +123,9 @@ public class GameManager : MonoBehaviour
                 }
             }
             soldiersDef[i] = soldierPrefab.Spawn(spawnPos);
-            soldiersDef[i].gameObject.GetComponent<SoldierControler>().SetSoldierInfo(i, team);
+            soldiersDef[i].gameObject.GetComponent<SoldierDefender>().enabled = true;
+            soldiersDef[i].gameObject.GetComponent<SoldierAttacker>().enabled = false;
+            soldiersDef[i].gameObject.GetComponent<SoldierDefender>().SetSoldierInfo(i, soldiersDef[i].transform.position);
         }
     }
 }
