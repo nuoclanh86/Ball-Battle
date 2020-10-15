@@ -30,14 +30,29 @@ public class SoldierAttacker : SoldierControler
         sld.gameObject.Kill();
     }
 
+    public void PassTheBallToOTher(GameObject sld)
+    {
+        isHoldTheBall = false;
+        reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeAtt;
+        curSpeed = GameManager.Instance.configScripttableObject.normalSpeedAtt;
+        sld.gameObject.tag = "Soldier";
+        targetMove = GameManager.Instance.GetWallTop().transform.position;
+        sld.transform.localScale /= 1.5f;
+
+        GameManager.Instance.GetTheBall().gameObject.GetComponent<BallController>().MoveToNearestAttacker(sld.transform.position);
+    }
+
     public void SoldiersAttCatchTheBall(GameObject sld)
     {
+        Debug.Log("SoldiersAttCatchTheBall");
         GameManager.Instance.GetTheBall().GetComponent<BallController>().HideTheBall();
         sld.transform.localScale *= 1.5f;
         curSpeed = GameManager.Instance.configScripttableObject.carryingSpeedAtt;
         isHoldTheBall = true;
         targetMove = GameManager.Instance.GetGateBaseR().transform.position;
         sld.gameObject.tag = "SoldierBall";
+
+        GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing = -1;
     }
 
     protected override void SetSoldierMaterial(GameObject sld)
@@ -55,14 +70,17 @@ public class SoldierAttacker : SoldierControler
     {
         if (reactivateTime <= 0)
         {
-            sld.transform.position = Vector3.MoveTowards(sld.transform.position, targetMove, curSpeed * Time.deltaTime);
+            if (index != GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing)
+            {
+                sld.transform.position = Vector3.MoveTowards(sld.transform.position, targetMove, curSpeed * Time.deltaTime);
+            }
         }
         else
         {
             reactivateTime -= Time.deltaTime;
         }
 
-        if (reactivateTime <= 0 && isHoldTheBall == false && GameManager.Instance.GetTheBall() != null)
+        if (reactivateTime <= 0 && isHoldTheBall == false)
         {
             float dist = Vector3.Distance(sld.transform.position, GameManager.Instance.GetTheBall().transform.position);
             if (dist <= GameManager.Instance.minDistance_Soldier_Ball)
@@ -89,7 +107,10 @@ public class SoldierAttacker : SoldierControler
 
         if (collision.gameObject.tag == "Ball")
         {
-            SoldiersAttCatchTheBall(sld.gameObject);
+            if (reactivateTime <= 0)
+                SoldiersAttCatchTheBall(sld.gameObject);
+            else
+                Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), sld.GetComponent<Collider>());
         }
         if (collision.gameObject.tag == "Soldier" && sld.gameObject.tag == "Soldier")
         {

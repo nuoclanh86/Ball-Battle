@@ -87,7 +87,7 @@ public class SoldierDefender : SoldierControler
             reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeDef;
             targetMove = originalPos;
             sld.gameObject.tag = "SoldierInactive";
-            collision.gameObject.GetComponent<SoldierAttacker>().KillSoldiersAtt(collision.gameObject);
+            collision.gameObject.GetComponent<SoldierAttacker>().PassTheBallToOTher(collision.gameObject);
         }
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SoldierControler : MonoBehaviour
 {
-    protected float reactivateTime = 0;
+    public float reactivateTime = 0;
     protected float curSpeed;
     protected Vector3 targetMove;
-    protected int index;
+    public int index;
 
     // Start is called before the first frame update
     void Start()
