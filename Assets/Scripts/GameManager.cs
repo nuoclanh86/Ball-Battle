@@ -97,11 +97,6 @@ public class GameManager : MonoBehaviour
         return gateBaseR;
     }
 
-    public void HideTheBall()
-    {
-        theBall.gameObject.transform.position = new Vector3(99.0f, 99.0f, 99.0f); //move it out of the screen
-    }
-
     public void SetMinDistanceSoldierBall(float dis)
     {
         minDistance_Soldier_Ball = dis;

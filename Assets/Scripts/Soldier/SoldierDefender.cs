@@ -36,6 +36,7 @@ public class SoldierDefender : SoldierControler
     {
         if (reactivateTime <= 0)
         {
+            sld.gameObject.tag = "Soldier";
             Vector3 nearestEnemyPos = FindNearestEnemyInRange(sld);
             if (nearestEnemyPos != Vector3.zero)
             {
@@ -85,6 +86,8 @@ public class SoldierDefender : SoldierControler
             Debug.Log("collision with SoldierBall");
             reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeDef;
             targetMove = originalPos;
+            sld.gameObject.tag = "SoldierInactive";
+            collision.gameObject.GetComponent<SoldierAttacker>().KillSoldiersAtt(collision.gameObject);
         }
     }
 }

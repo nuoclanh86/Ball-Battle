@@ -23,15 +23,16 @@ public class SoldierAttacker : SoldierControler
 
     public void KillSoldiersAtt(GameObject sld)
     {
-        Debug.Log("Kill Soldier index = " + index);
+        //Debug.Log("Kill Soldier index = " + index);
         GameManager.Instance.GetSoldiersAtt()[index] = null;
         index = -1;
+        sld.gameObject.tag = "Soldier";
         sld.gameObject.Kill();
     }
 
     public void SoldiersAttCatchTheBall(GameObject sld)
     {
-        GameManager.Instance.HideTheBall();
+        GameManager.Instance.GetTheBall().GetComponent<BallController>().HideTheBall();
         sld.transform.localScale *= 1.5f;
         curSpeed = GameManager.Instance.configScripttableObject.carryingSpeedAtt;
         isHoldTheBall = true;
@@ -61,10 +62,9 @@ public class SoldierAttacker : SoldierControler
             reactivateTime -= Time.deltaTime;
         }
 
-        float dist = Vector3.Distance(sld.transform.position, GameManager.Instance.GetTheBall().transform.position);
-
-        if (reactivateTime <= 0 && isHoldTheBall == false)
+        if (reactivateTime <= 0 && isHoldTheBall == false && GameManager.Instance.GetTheBall() != null)
         {
+            float dist = Vector3.Distance(sld.transform.position, GameManager.Instance.GetTheBall().transform.position);
             if (dist <= GameManager.Instance.minDistance_Soldier_Ball)
             {
                 GameManager.Instance.SetMinDistanceSoldierBall(dist);
