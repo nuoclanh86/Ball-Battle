@@ -27,9 +27,11 @@ public class GameManager : MonoBehaviour
 
     GameObject theBall;
     GameObject[] soldiersAtt;
+    GameObject[] soldiersDef;
     GameObject wallTop;
     GameObject wallMid;
     GameObject wallRight;
+    public float minDistance_Soldier_Ball = 99999;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
         theBall = Instantiate(theBallPrefab, new Vector3(ran_x, 0.5f, ran_z), Quaternion.identity);
 
         soldiersAtt = new GameObject[configScripttableObject.maxArray];
+        soldiersDef = new GameObject[configScripttableObject.maxArray];
     }
 
     // Update is called once per frame
@@ -67,32 +70,62 @@ public class GameManager : MonoBehaviour
         return soldiersAtt;
     }
 
+    public GameObject[] GetsoldiersDef()
+    {
+        return soldiersDef;
+    }
+
     public GameObject GetWallTop()
     {
         return wallTop;
     }
 
+    public GameObject GetTheBall()
+    {
+        return theBall;
+    }
+
+    public void HideTheBall()
+    {
+        theBall.gameObject.transform.position = new Vector3(99.0f, 99.0f, 99.0f); //move it out of the screen
+    }
+
+    public void SetMinDistanceSoldierBall(float dis)
+    {
+        minDistance_Soldier_Ball = dis;
+    }
+   
     void SpawnSoldier(Vector3 spawnPos)
     {
         Team team;
-        if(spawnPos.z < wallMid.transform.position.z)
+        int i = 0;
+
+        spawnPos.y = 1.0f; // spawn on the plane
+        if (spawnPos.z < wallMid.transform.position.z)
         {
             team = Team.Attacker;
+            for (i = 0; i < configScripttableObject.maxArray; i++)
+            {
+                if (soldiersAtt[i] == null)
+                {
+                    break;
+                }
+            }
+            soldiersAtt[i] = soldierPrefab.Spawn(spawnPos);
+            soldiersAtt[i].gameObject.GetComponent<SoldierControler>().SetSoldierInfo(i, team);
         }
         else
         {
             team = Team.Defender;
-        }
-        spawnPos.y = 1.0f; // spawn on the plane
-        int i = 0;
-        for (i = 0; i < configScripttableObject.maxArray; i++)
-        {
-            if (soldiersAtt[i] == null)
+            for (i = 0; i < configScripttableObject.maxArray; i++)
             {
-                break;
+                if (soldiersDef[i] == null)
+                {
+                    break;
+                }
             }
+            soldiersDef[i] = soldierPrefab.Spawn(spawnPos);
+            soldiersDef[i].gameObject.GetComponent<SoldierControler>().SetSoldierInfo(i, team);
         }
-        soldiersAtt[i] = soldierPrefab.Spawn(spawnPos);
-        soldiersAtt[i].gameObject.GetComponent<SoldierControler>().SetSoldierInfo(i, team);
     }
 }

@@ -8,6 +8,11 @@ public enum Team
     Defender
 }
 
+//should have 
+    //class Soldier
+    //class SoldierAttacker : Soldier
+    //class SoldierDefender : Soldier
+
 public class SoldierControler : MonoBehaviour
 {
     float reactivateTime = 0;
@@ -21,9 +26,7 @@ public class SoldierControler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeAtt;
-        curSpeed = GameManager.Instance.configScripttableObject.normalSpeedAtt;
-        targetMove = GameManager.Instance.GetWallTop().transform.position;
+        InitDefaultValue();
     }
 
     // Update is called once per frame
@@ -33,7 +36,6 @@ public class SoldierControler : MonoBehaviour
         {
             if (team == Team.Attacker)
             {
-                targetMove.x = this.transform.position.x;
                 this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove,
                                                                     curSpeed * Time.deltaTime);
             }
@@ -41,6 +43,22 @@ public class SoldierControler : MonoBehaviour
         else
         {
             reactivateTime -= Time.deltaTime;
+        }
+
+        float dist = Vector3.Distance(this.transform.position, GameManager.Instance.GetTheBall().transform.position);
+
+        if (reactivateTime <= 0)
+        {
+            if (dist <= GameManager.Instance.minDistance_Soldier_Ball)
+            {
+                GameManager.Instance.SetMinDistanceSoldierBall(dist);
+                targetMove = GameManager.Instance.GetTheBall().transform.position;
+            }
+            else
+            {
+                targetMove = GameManager.Instance.GetWallTop().transform.position;
+                targetMove.x = this.transform.position.x; // go straight to the wall
+            }
         }
     }
 
@@ -65,23 +83,35 @@ public class SoldierControler : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("OnCollisionEnter : " + collision.gameObject.name);
-        if (collision.gameObject.tag == "Wall")
+        if (team == Team.Attacker)
         {
-            Debug.Log("Kill Soldier index = " + index);
-            GameManager.Instance.GetSoldiersAtt()[index] = null;
-            index = -1;
-            this.gameObject.Kill();
+            if (collision.gameObject.tag == "Wall")
+            {
+                Debug.Log("Kill Soldier index = " + index);
+                GameManager.Instance.GetSoldiersAtt()[index] = null;
+                index = -1;
+                this.gameObject.Kill();
+            }
+
+            if (collision.gameObject.tag == "Ball")
+            {
+                GameManager.Instance.HideTheBall();
+                this.transform.localScale *= 1.5f;
+            }
         }
     }
 
-    public void SetTargetMove(Vector3 targetPos)
+    void InitDefaultValue()
     {
-        targetMove = targetPos;
+        reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeAtt;
+        curSpeed = GameManager.Instance.configScripttableObject.normalSpeedAtt;
+        targetMove = GameManager.Instance.GetWallTop().transform.position;
     }
 
     public void SetSoldierInfo(int m_index, Team m_team)
     {
         index = m_index;
         team = m_team;
+        InitDefaultValue(); // reset value when spawn
     }
 }
