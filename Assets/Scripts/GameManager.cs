@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum GameStates
+public enum GameStates
 {
     Idle,
     Playing,
-    PlayerLose,
-    PlayerWin
+    AttackerLose,
+    AttackerWin
 }
 
 public class GameManager : MonoBehaviour
@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     GameObject wallRight;
     GameObject gateBaseR;
 
+    GameStates gameState;
+
     [HideInInspector]
     public float minDistance_Soldier_Ball = 99999;
     [HideInInspector]
@@ -57,12 +59,15 @@ public class GameManager : MonoBehaviour
         soldiersDef = new GameObject[configScripttableObject.maxArray];
 
         detectionRangeDefFloat = configScripttableObject.detectionRangeDef * Vector3.Distance(wallLeft.transform.position, wallRight.transform.position);
+
+        gameState = GameStates.Idle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && 
+            (gameState != GameStates.AttackerLose || gameState != GameStates.AttackerWin))
         {
             RaycastHit hit;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -134,11 +139,13 @@ public class GameManager : MonoBehaviour
             soldiersDef[i] = soldierDefPrefab.Spawn(spawnPos);
             soldiersDef[i].gameObject.GetComponent<SoldierDefender>().SetSoldierInfo(i, soldiersDef[i].transform.position);
         }
+        gameState = GameStates.Playing;
     }
 
-    public void GameEnd()
+    public void GameEnd(GameStates gs)
     {
-        Debug.Log("GameEnd");
+        Debug.Log("GameEnd : " + gs);
+        gameState = gs;
         theBall.gameObject.GetComponent<BallController>().HideTheBall();
         foreach (GameObject soldierAtt in soldiersAtt)
         {

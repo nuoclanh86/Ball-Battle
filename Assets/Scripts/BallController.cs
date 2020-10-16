@@ -50,7 +50,7 @@ public class BallController : MonoBehaviour
         if (soldierAtt_Chasing == null)
         {
             Debug.Log("BallController cant found any Attacker");
-            GameManager.Instance.GameEnd();
+            GameManager.Instance.GameEnd(GameStates.AttackerLose);
         }
     }
 
