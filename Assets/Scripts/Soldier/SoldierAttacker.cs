@@ -43,11 +43,12 @@ public class SoldierAttacker : MonoBehaviour
 
         if (collision.gameObject.tag == "Ball")
         {
-            if (reactivateTime <= 0)
-                SoldiersAttCatchTheBall();
-            else
+            int indexSoldierAttChasing = GameManager.Instance.GetTheBall().gameObject.GetComponent<BallController>().indexSoldierAtt_Chasing;
+            Debug.Log("ProcessCollision tag=" + this.gameObject.tag + " collision with the ball");
+            if ((reactivateTime <= 0 && indexSoldierAttChasing == -1) || indexSoldierAttChasing == index)
             {
-                Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), this.GetComponent<Collider>());
+                Debug.Log("SoldiersAttCatchTheBall");
+                SoldiersAttCatchTheBall();
             }
         }
         if (collision.gameObject.tag == "SoldierDef" && this.gameObject.tag == "SoldierAtt" && isHoldTheBall == false)
