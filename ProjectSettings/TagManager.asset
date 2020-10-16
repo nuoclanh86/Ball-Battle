@@ -9,6 +9,7 @@ TagManager:
   - SoldierAtt
   - SoldierDef
   - Soldier
+  - GatebaseR
   layers:
   - Default
   - TransparentFX

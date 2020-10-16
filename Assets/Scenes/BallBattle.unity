@@ -316,6 +316,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleField
       objectReference: {fileID: 0}
+    - target: {fileID: 9062669550064748506, guid: 6314a5d8baf5b364c89dc9cd4f3a6985,
+        type: 3}
+      propertyPath: m_TagString
+      value: GatebaseR
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6314a5d8baf5b364c89dc9cd4f3a6985, type: 3}
 --- !u!1 &1019028193
