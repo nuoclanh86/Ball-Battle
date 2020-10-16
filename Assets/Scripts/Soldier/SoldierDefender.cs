@@ -2,10 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierDefender : SoldierControler
+public class SoldierDefender : MonoBehaviour
 {
     Vector3 originalPos;
     Color DefenderColor = Color.red * 0.9f;
+
+    [HideInInspector]
+    public float reactivateTime = 0;
+    protected float curSpeed;
+    protected Vector3 targetMove;
+    [HideInInspector]
+    public int index;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        InitDefaultValue();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        SoldierMove();
+    }
+
+    private void LateUpdate()
+    {
+        SetSoldierMaterial();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //Debug.Log("collision.tag = " + collision.gameObject.tag);
+        //Debug.Log("sld.tag = " + sld.gameObject.tag);
+        if (collision.gameObject.tag == "SoldierAtt" && collision.gameObject.GetComponent<SoldierAttacker>().isHoldTheBall == true)
+        {
+            Debug.Log("collision with Soldier holding Ball");
+            reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeDef;
+            targetMove = originalPos;
+            collision.gameObject.GetComponent<SoldierAttacker>().PassTheBallToOTher();
+        }
+    }
 
     public void SetSoldierInfo(int m_index, Vector3 pos)
     {
@@ -14,15 +51,15 @@ public class SoldierDefender : SoldierControler
         InitDefaultValue(); // reset value when spawn
     }
 
-    protected override void InitDefaultValue()
+    void InitDefaultValue()
     {
         reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeDef;
         curSpeed = GameManager.Instance.configScripttableObject.normalSpeedDef;
         targetMove = originalPos;
-        team = Team.Defender;
+        this.gameObject.tag = "SoldierDef";
     }
 
-    protected override void SetSoldierMaterial()
+    void SetSoldierMaterial()
     {
         Color statusColor;
         statusColor = DefenderColor;
@@ -33,11 +70,10 @@ public class SoldierDefender : SoldierControler
         this.GetComponent<Renderer>().material.SetColor("_Color", statusColor);
     }
 
-    protected override void SoldierMove()
+    void SoldierMove()
     {
         if (reactivateTime <= 0)
         {
-            this.gameObject.tag = "SoldierDef";
             Vector3 nearestEnemyPos = FindNearestEnemyInRange();
             if (nearestEnemyPos != Vector3.zero)
             {
@@ -62,34 +98,18 @@ public class SoldierDefender : SoldierControler
     Vector3 FindNearestEnemyInRange()
     {
         Vector3 found = Vector3.zero;
-        for (int i = 0; i <= GameManager.Instance.configScripttableObject.maxArray; i++)
+        foreach (GameObject soldierAtt in GameManager.Instance.GetSoldiersAtt())
         {
-            //Debug.Log("FindNearestEnemyInRange " + i);
-            if (GameManager.Instance.GetSoldiersAtt()[i] == null)
-                break;
-            if (GameManager.Instance.GetSoldiersAtt()[i].gameObject.GetComponent<SoldierAttacker>().isHoldTheBall)
+            if (soldierAtt != null && soldierAtt.GetComponent<SoldierAttacker>().isHoldTheBall)
             {
-                Debug.Log("FindNearestEnemyInRange attacker " + i + " isHoldTheBall");
-                float dist = Vector3.Distance(this.transform.position, GameManager.Instance.GetSoldiersAtt()[i].transform.position);
+                //Debug.Log("FindNearestEnemyInRange attacker " + i + " isHoldTheBall");
+                float dist = Vector3.Distance(this.transform.position, soldierAtt.transform.position);
                 if (dist <= GameManager.Instance.detectionRangeDefFloat)
                 {
-                    found = GameManager.Instance.GetSoldiersAtt()[i].transform.position;
+                    found = soldierAtt.transform.position;
                 }
             }
         }
         return found;
-    }
-
-    protected override void ProcessCollision(Collision collision)
-    {
-        //Debug.Log("collision.tag = " + collision.gameObject.tag);
-        //Debug.Log("sld.tag = " + sld.gameObject.tag);
-        if (collision.gameObject.tag == "SoldierBall")
-        {
-            Debug.Log("collision with SoldierBall");
-            reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeDef;
-            targetMove = originalPos;
-            collision.gameObject.GetComponent<SoldierAttacker>().PassTheBallToOTher();
-        }
     }
 }

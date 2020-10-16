@@ -25,18 +25,17 @@ public class BallController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "SoldierAtt" && collision.gameObject.GetComponent<SoldierAttacker>().index == indexSoldierAtt_Chasing
-            && collision.gameObject.GetComponent<SoldierAttacker>().team == Team.Attacker)
-        {
-            //collision.gameObject.GetComponent<SoldierAttacker>().SoldiersAttCatchTheBall(collision.gameObject);
-        }
-        else
-        {
-            Physics.IgnoreCollision(this.GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "SoldierAtt" && collision.gameObject.GetComponent<SoldierAttacker>().index == indexSoldierAtt_Chasing)
+    //    {
+    //        //collision.gameObject.GetComponent<SoldierAttacker>().SoldiersAttCatchTheBall(collision.gameObject);
+    //    }
+    //    else
+    //    {
+    //        Physics.IgnoreCollision(this.GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
+    //    }
+    //}
 
     public void HideTheBall()
     {
@@ -56,23 +55,19 @@ public class BallController : MonoBehaviour
     {
         Vector3 found = Vector3.zero;
         float minDist = 9999.0f;
-        for (int i = 0; i <= GameManager.Instance.configScripttableObject.maxArray; i++)
+        foreach (GameObject soldierAtt in GameManager.Instance.GetSoldiersAtt())
         {
-            if (GameManager.Instance.GetSoldiersAtt()[i] == null)
-                break;
-            if (GameManager.Instance.GetSoldiersAtt()[i].GetComponent<SoldierAttacker>().reactivateTime <= 0)
+            if (soldierAtt != null && soldierAtt.GetComponent<SoldierAttacker>().reactivateTime <= 0)
             {
-                float dist = Vector3.Distance(this.transform.position, GameManager.Instance.GetSoldiersAtt()[i].transform.position);
+                float dist = Vector3.Distance(this.transform.position, soldierAtt.transform.position);
                 if (dist <= minDist)
                 {
                     minDist = dist;
-                    found = GameManager.Instance.GetSoldiersAtt()[i].transform.position;
-                    indexSoldierAtt_Chasing = GameManager.Instance.GetSoldiersAtt()[i].GetComponent<SoldierAttacker>().index;
+                    found = soldierAtt.transform.position;
+                    indexSoldierAtt_Chasing = soldierAtt.GetComponent<SoldierAttacker>().index;
                 }
             }
         }
-        if (found == Vector3.zero)
-            print("FindNearestAttacker fail.");
         return found;
     }
 }

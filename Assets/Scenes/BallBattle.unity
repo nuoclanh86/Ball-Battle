@@ -204,6 +204,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+--- !u!1 &776334077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 776334078}
+  - component: {fileID: 776334079}
+  m_Layer: 0
+  m_Name: SoldierDefPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &776334078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776334077}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.5045435, y: 31.563133, z: -19.20247}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1019028195}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &776334079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776334077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 472370f2c0d98624b9e7ec792cd6ad88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7332811918754606923, guid: a4b0eae284956ed46b5ee0a883cec2ab, type: 3}
+  initialPoolsize: 100
 --- !u!1001 &999175959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -314,6 +359,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1571588128}
+  - {fileID: 776334078}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -381,7 +427,7 @@ GameObject:
   - component: {fileID: 1571588128}
   - component: {fileID: 1571588129}
   m_Layer: 0
-  m_Name: SoldierPool
+  m_Name: SoldierAttPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -413,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472370f2c0d98624b9e7ec792cd6ad88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1511133381058279029, guid: e665705c1b77ad043a7baeb048de18e2, type: 3}
+  prefab: {fileID: 6839841440992916279, guid: efe56a05fa29d0444aeae0d62b1252bd, type: 3}
   initialPoolsize: 100
 --- !u!1 &1993185384
 GameObject:

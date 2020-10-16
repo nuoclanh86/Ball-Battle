@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour
     public ConfigScriptableObject configScripttableObject;
 
     public GameObject battleFieldPrefab;
-    public GameObject soldierPrefab;
+    public GameObject soldierAttPrefab;
+    public GameObject soldierDefPrefab;
     public GameObject theBallPrefab;
 
     GameObject theBall;
@@ -118,9 +119,7 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             }
-            soldiersAtt[i] = soldierPrefab.Spawn(spawnPos);
-            soldiersAtt[i].gameObject.GetComponent<SoldierDefender>().enabled = false;
-            soldiersAtt[i].gameObject.GetComponent<SoldierAttacker>().enabled = true;
+            soldiersAtt[i] = soldierAttPrefab.Spawn(spawnPos);
             soldiersAtt[i].gameObject.GetComponent<SoldierAttacker>().SetSoldierInfo(i);
         }
         else
@@ -132,9 +131,7 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             }
-            soldiersDef[i] = soldierPrefab.Spawn(spawnPos);
-            soldiersDef[i].gameObject.GetComponent<SoldierDefender>().enabled = true;
-            soldiersDef[i].gameObject.GetComponent<SoldierAttacker>().enabled = false;
+            soldiersDef[i] = soldierDefPrefab.Spawn(spawnPos);
             soldiersDef[i].gameObject.GetComponent<SoldierDefender>().SetSoldierInfo(i, soldiersDef[i].transform.position);
         }
     }

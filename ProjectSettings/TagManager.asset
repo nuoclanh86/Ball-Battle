@@ -6,9 +6,9 @@ TagManager:
   tags:
   - Wall
   - Ball
+  - SoldierAtt
+  - SoldierDef
   - Soldier
-  - SoldierBall
-  - SoldierInactive
   layers:
   - Default
   - TransparentFX
