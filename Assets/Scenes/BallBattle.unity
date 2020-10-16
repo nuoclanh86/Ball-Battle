@@ -396,7 +396,9 @@ MonoBehaviour:
     type: 2}
   battleFieldPrefab: {fileID: 7289373435467284693, guid: 6314a5d8baf5b364c89dc9cd4f3a6985,
     type: 3}
-  soldierPrefab: {fileID: 1511133381058279029, guid: e665705c1b77ad043a7baeb048de18e2,
+  soldierAttPrefab: {fileID: 6839841440992916279, guid: efe56a05fa29d0444aeae0d62b1252bd,
+    type: 3}
+  soldierDefPrefab: {fileID: 7332811918754606923, guid: a4b0eae284956ed46b5ee0a883cec2ab,
     type: 3}
   theBallPrefab: {fileID: 6306694207498365882, guid: 5509ec64e992dd64ab06810b9e69940e,
     type: 3}
