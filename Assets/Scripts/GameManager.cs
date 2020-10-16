@@ -33,7 +33,10 @@ public class GameManager : MonoBehaviour
     GameObject wallLeft;
     GameObject wallRight;
     GameObject gateBaseR;
+
+    [HideInInspector]
     public float minDistance_Soldier_Ball = 99999;
+    [HideInInspector]
     public float detectionRangeDefFloat;
 
     // Start is called before the first frame update

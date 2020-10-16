@@ -19,9 +19,10 @@ public class SoldierDefender : SoldierControler
         reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeDef;
         curSpeed = GameManager.Instance.configScripttableObject.normalSpeedDef;
         targetMove = originalPos;
+        team = Team.Defender;
     }
 
-    protected override void SetSoldierMaterial(GameObject sld)
+    protected override void SetSoldierMaterial()
     {
         Color statusColor;
         statusColor = DefenderColor;
@@ -29,45 +30,47 @@ public class SoldierDefender : SoldierControler
         {
             statusColor *= 0.2f;
         }
-        sld.GetComponent<Renderer>().material.SetColor("_Color", statusColor);
+        this.GetComponent<Renderer>().material.SetColor("_Color", statusColor);
     }
 
-    protected override void SoldierMove(GameObject sld)
+    protected override void SoldierMove()
     {
         if (reactivateTime <= 0)
         {
-            sld.gameObject.tag = "Soldier";
-            Vector3 nearestEnemyPos = FindNearestEnemyInRange(sld);
+            this.gameObject.tag = "SoldierDef";
+            Vector3 nearestEnemyPos = FindNearestEnemyInRange();
             if (nearestEnemyPos != Vector3.zero)
             {
                 targetMove = nearestEnemyPos;
                 curSpeed = GameManager.Instance.configScripttableObject.normalSpeedDef;
-                sld.transform.position = Vector3.MoveTowards(sld.transform.position, targetMove, curSpeed * Time.deltaTime);
+                this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
             }
         }
         else
         {
             reactivateTime -= Time.deltaTime;
-            if (sld.transform.position != originalPos)
+            if (this.transform.position != originalPos)
             {
-                originalPos.y = sld.transform.position.y; // dont care if it's higher
+                originalPos.y = this.transform.position.y; // dont care if it's higher
                 // move back to originalPos
                 curSpeed = GameManager.Instance.configScripttableObject.returnSpeedDef;
-                sld.transform.position = Vector3.MoveTowards(sld.transform.position, originalPos, curSpeed * Time.deltaTime);
+                this.transform.position = Vector3.MoveTowards(this.transform.position, originalPos, curSpeed * Time.deltaTime);
             }
         }
     }
 
-    Vector3 FindNearestEnemyInRange(GameObject sld)
+    Vector3 FindNearestEnemyInRange()
     {
         Vector3 found = Vector3.zero;
         for (int i = 0; i <= GameManager.Instance.configScripttableObject.maxArray; i++)
         {
+            //Debug.Log("FindNearestEnemyInRange " + i);
             if (GameManager.Instance.GetSoldiersAtt()[i] == null)
                 break;
             if (GameManager.Instance.GetSoldiersAtt()[i].gameObject.GetComponent<SoldierAttacker>().isHoldTheBall)
             {
-                float dist = Vector3.Distance(sld.transform.position, GameManager.Instance.GetSoldiersAtt()[i].transform.position);
+                Debug.Log("FindNearestEnemyInRange attacker " + i + " isHoldTheBall");
+                float dist = Vector3.Distance(this.transform.position, GameManager.Instance.GetSoldiersAtt()[i].transform.position);
                 if (dist <= GameManager.Instance.detectionRangeDefFloat)
                 {
                     found = GameManager.Instance.GetSoldiersAtt()[i].transform.position;
@@ -77,7 +80,7 @@ public class SoldierDefender : SoldierControler
         return found;
     }
 
-    protected override void ProcessCollision(Collision collision, GameObject sld)
+    protected override void ProcessCollision(Collision collision)
     {
         //Debug.Log("collision.tag = " + collision.gameObject.tag);
         //Debug.Log("sld.tag = " + sld.gameObject.tag);
@@ -86,8 +89,7 @@ public class SoldierDefender : SoldierControler
             Debug.Log("collision with SoldierBall");
             reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeDef;
             targetMove = originalPos;
-            sld.gameObject.tag = "SoldierInactive";
-            collision.gameObject.GetComponent<SoldierAttacker>().PassTheBallToOTher(collision.gameObject);
+            collision.gameObject.GetComponent<SoldierAttacker>().PassTheBallToOTher();
         }
     }
 }

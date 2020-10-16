@@ -19,6 +19,7 @@ public class SoldierAttacker : SoldierControler
         curSpeed = GameManager.Instance.configScripttableObject.normalSpeedAtt;
         targetMove = GameManager.Instance.GetWallTop().transform.position;
         isHoldTheBall = false;
+        team = Team.Attacker;
     }
 
     public void KillSoldiersAtt(GameObject sld)
@@ -26,36 +27,37 @@ public class SoldierAttacker : SoldierControler
         //Debug.Log("Kill Soldier index = " + index);
         GameManager.Instance.GetSoldiersAtt()[index] = null;
         index = -1;
-        sld.gameObject.tag = "Soldier";
+        sld.gameObject.tag = "SoldierAtt";
         sld.gameObject.Kill();
     }
 
-    public void PassTheBallToOTher(GameObject sld)
+    public void PassTheBallToOTher()
     {
         isHoldTheBall = false;
         reactivateTime = GameManager.Instance.configScripttableObject.reactivateTimeAtt;
         curSpeed = GameManager.Instance.configScripttableObject.normalSpeedAtt;
-        sld.gameObject.tag = "Soldier";
+        this.gameObject.tag = "SoldierAtt";
         targetMove = GameManager.Instance.GetWallTop().transform.position;
-        sld.transform.localScale /= 1.5f;
+        this.transform.localScale /= 1.5f;
 
-        GameManager.Instance.GetTheBall().gameObject.GetComponent<BallController>().MoveToNearestAttacker(sld.transform.position);
+        GameManager.Instance.GetTheBall().gameObject.GetComponent<BallController>().MoveToNearestAttacker(this.transform.position);
     }
 
-    public void SoldiersAttCatchTheBall(GameObject sld)
+    public void SoldiersAttCatchTheBall()
     {
         Debug.Log("SoldiersAttCatchTheBall");
         GameManager.Instance.GetTheBall().GetComponent<BallController>().HideTheBall();
-        sld.transform.localScale *= 1.5f;
+        this.transform.localScale *= 1.5f;
+        print("sld.transform.localScale = " + this.transform.localScale);
         curSpeed = GameManager.Instance.configScripttableObject.carryingSpeedAtt;
         isHoldTheBall = true;
         targetMove = GameManager.Instance.GetGateBaseR().transform.position;
-        sld.gameObject.tag = "SoldierBall";
+        this.gameObject.tag = "SoldierBall";
 
         GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing = -1;
     }
 
-    protected override void SetSoldierMaterial(GameObject sld)
+    protected override void SetSoldierMaterial()
     {
         Color statusColor;
         statusColor = AttackerColor;
@@ -63,16 +65,16 @@ public class SoldierAttacker : SoldierControler
         {
             statusColor *= 0.2f;
         }
-        sld.GetComponent<Renderer>().material.SetColor("_Color", statusColor);
+        this.GetComponent<Renderer>().material.SetColor("_Color", statusColor);
     }
 
-    protected override void SoldierMove(GameObject sld)
+    protected override void SoldierMove()
     {
         if (reactivateTime <= 0)
         {
             if (index != GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing)
             {
-                sld.transform.position = Vector3.MoveTowards(sld.transform.position, targetMove, curSpeed * Time.deltaTime);
+                this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
             }
         }
         else
@@ -82,7 +84,7 @@ public class SoldierAttacker : SoldierControler
 
         if (reactivateTime <= 0 && isHoldTheBall == false)
         {
-            float dist = Vector3.Distance(sld.transform.position, GameManager.Instance.GetTheBall().transform.position);
+            float dist = Vector3.Distance(this.transform.position, GameManager.Instance.GetTheBall().transform.position);
             if (dist <= GameManager.Instance.minDistance_Soldier_Ball)
             {
                 GameManager.Instance.SetMinDistanceSoldierBall(dist);
@@ -91,30 +93,30 @@ public class SoldierAttacker : SoldierControler
             else
             {
                 targetMove = GameManager.Instance.GetWallTop().transform.position;
-                targetMove.x = sld.transform.position.x; // go straight to the wall
+                targetMove.x = this.transform.position.x; // go straight to the wall
             }
         }
     }
 
-    protected override void ProcessCollision(Collision collision, GameObject sld)
+    protected override void ProcessCollision(Collision collision)
     {
         //Debug.Log("collision.tag = " + collision.gameObject.tag);
         //Debug.Log("sld.tag = " + sld.gameObject.tag);
         if (collision.gameObject.tag == "Wall")
         {
-            KillSoldiersAtt(sld.gameObject);
+            KillSoldiersAtt(this.gameObject);
         }
 
         if (collision.gameObject.tag == "Ball")
         {
             if (reactivateTime <= 0)
-                SoldiersAttCatchTheBall(sld.gameObject);
+                SoldiersAttCatchTheBall();
             else
-                Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), sld.GetComponent<Collider>());
+                Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), this.GetComponent<Collider>());
         }
-        if (collision.gameObject.tag == "Soldier" && sld.gameObject.tag == "Soldier")
+        if (collision.gameObject.tag == "SoldierDef" && this.gameObject.tag == "SoldierAtt")
         {
-            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), sld.GetComponent<Collider>());
+            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), this.GetComponent<Collider>());
         }
     }
 }

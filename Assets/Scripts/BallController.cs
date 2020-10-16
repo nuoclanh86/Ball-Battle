@@ -27,9 +27,10 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Soldier" && collision.gameObject.GetComponent<SoldierAttacker>().index == indexSoldierAtt_Chasing)
+        if (collision.gameObject.tag == "SoldierAtt" && collision.gameObject.GetComponent<SoldierAttacker>().index == indexSoldierAtt_Chasing
+            && collision.gameObject.GetComponent<SoldierAttacker>().team == Team.Attacker)
         {
-            collision.gameObject.GetComponent<SoldierAttacker>().SoldiersAttCatchTheBall(collision.gameObject);
+            //collision.gameObject.GetComponent<SoldierAttacker>().SoldiersAttCatchTheBall(collision.gameObject);
         }
         else
         {
@@ -70,6 +71,8 @@ public class BallController : MonoBehaviour
                 }
             }
         }
+        if (found == Vector3.zero)
+            print("FindNearestAttacker fail.");
         return found;
     }
 }
