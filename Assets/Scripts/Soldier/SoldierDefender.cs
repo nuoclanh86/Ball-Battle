@@ -9,8 +9,8 @@ public class SoldierDefender : MonoBehaviour
 
     [HideInInspector]
     public float reactivateTime = 0;
-    protected float curSpeed;
-    protected Vector3 targetMove;
+    float curSpeed;
+    Vector3 targetMove;
     [HideInInspector]
     public int index;
 

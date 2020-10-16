@@ -43,11 +43,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        wallTop     =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(1).gameObject;
-        wallMid     =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(2).gameObject;
-        wallRight   =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(3).gameObject;
-        wallLeft    =   battleFieldPrefab.transform.GetChild(0).transform.GetChild(4).gameObject;
-        gateBaseR   =   battleFieldPrefab.transform.GetChild(2).gameObject;
+        wallTop = battleFieldPrefab.transform.GetChild(0).transform.GetChild(1).gameObject;
+        wallMid = battleFieldPrefab.transform.GetChild(0).transform.GetChild(2).gameObject;
+        wallRight = battleFieldPrefab.transform.GetChild(0).transform.GetChild(3).gameObject;
+        wallLeft = battleFieldPrefab.transform.GetChild(0).transform.GetChild(4).gameObject;
+        gateBaseR = battleFieldPrefab.transform.GetChild(2).gameObject;
         float deltaRange = 0.5f; // do not spawn too nearly walls
         float ran_x = Random.Range(wallLeft.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
         float ran_z = Random.Range(-wallTop.transform.position.z + deltaRange, 0.0f - deltaRange);
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
     {
         minDistance_Soldier_Ball = dis;
     }
-   
+
     void SpawnSoldier(Vector3 spawnPos)
     {
         int i = 0;
@@ -133,6 +133,22 @@ public class GameManager : MonoBehaviour
             }
             soldiersDef[i] = soldierDefPrefab.Spawn(spawnPos);
             soldiersDef[i].gameObject.GetComponent<SoldierDefender>().SetSoldierInfo(i, soldiersDef[i].transform.position);
+        }
+    }
+
+    public void GameEnd()
+    {
+        Debug.Log("GameEnd");
+        theBall.gameObject.GetComponent<BallController>().HideTheBall();
+        foreach (GameObject soldierAtt in soldiersAtt)
+        {
+            if (soldierAtt != null)
+                soldierAtt.GetComponent<SoldierAttacker>().reactivateTime = 99.0f;
+        }
+        foreach (GameObject soldierDef in soldiersDef)
+        {
+            if (soldierDef != null)
+                soldierDef.GetComponent<SoldierDefender>().reactivateTime = 99.0f;
         }
     }
 }

@@ -24,19 +24,7 @@ public class BallController : MonoBehaviour
             this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
         }
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "SoldierAtt" && collision.gameObject.GetComponent<SoldierAttacker>().index == indexSoldierAtt_Chasing)
-    //    {
-    //        //collision.gameObject.GetComponent<SoldierAttacker>().SoldiersAttCatchTheBall(collision.gameObject);
-    //    }
-    //    else
-    //    {
-    //        Physics.IgnoreCollision(this.GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
-    //    }
-    //}
-
+    
     public void HideTheBall()
     {
         this.gameObject.transform.position = new Vector3(99.0f, 99.0f, 99.0f); //move it out of the screen
@@ -49,6 +37,9 @@ public class BallController : MonoBehaviour
         this.gameObject.transform.position = curAttackerPos;
         targetMove = FindNearestAttacker();
         curSpeed = GameManager.Instance.configScripttableObject.ballSpeedAtt;
+
+        if (targetMove == Vector3.zero)
+            GameManager.Instance.GameEnd();
     }
 
     Vector3 FindNearestAttacker()

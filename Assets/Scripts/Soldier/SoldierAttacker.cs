@@ -9,8 +9,8 @@ public class SoldierAttacker : MonoBehaviour
     public bool isHoldTheBall = false;
     [HideInInspector]
     public float reactivateTime = 0;
-    protected float curSpeed;
-    protected Vector3 targetMove;
+    float curSpeed;
+    Vector3 targetMove;
     [HideInInspector]
     public int index;
 
@@ -25,6 +25,7 @@ public class SoldierAttacker : MonoBehaviour
     {
         SoldierMove();
 
+        //for debug
         this.gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = index + ":" + reactivateTime.ToString("0.0");
     }
 
@@ -36,7 +37,8 @@ public class SoldierAttacker : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("ProcessCollision collision.tag = " + collision.gameObject.tag + " Attacker tag = " + this.gameObject.tag);
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Wall" ||
+            (collision.gameObject.tag == "GatebaseR" && isHoldTheBall == false))
         {
             KillSoldiersAtt();
         }
@@ -51,9 +53,15 @@ public class SoldierAttacker : MonoBehaviour
                 SoldiersAttCatchTheBall();
             }
         }
+
         if (collision.gameObject.tag == "SoldierDef" && this.gameObject.tag == "SoldierAtt" && isHoldTheBall == false)
         {
             Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), this.GetComponent<Collider>());
+        }
+
+        if (collision.gameObject.tag == "GatebaseR" && this.gameObject.tag == "SoldierAtt" && isHoldTheBall == true)
+        {
+            GameManager.Instance.GameEnd();
         }
     }
 
