@@ -61,6 +61,7 @@ public class SoldierAttacker : MonoBehaviour
 
         if (collision.gameObject.tag == "GatebaseR" && this.gameObject.tag == "SoldierAtt" && isHoldTheBall == true)
         {
+            Debug.Log("Attacker holding ball got the Gatebase");
             GameManager.Instance.GameEnd();
         }
     }

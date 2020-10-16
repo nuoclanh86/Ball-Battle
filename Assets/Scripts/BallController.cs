@@ -6,7 +6,10 @@ public class BallController : MonoBehaviour
 {
     Vector3 targetMove;
     float curSpeed;
+    [HideInInspector]
     public int indexSoldierAtt_Chasing = -1;
+    [HideInInspector]
+    GameObject soldierAtt_Chasing;
 
     // Start is called before the first frame update
     void Start()
@@ -18,33 +21,42 @@ public class BallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (targetMove != Vector3.zero)
+        if (indexSoldierAtt_Chasing != -1 && soldierAtt_Chasing!= null)
         {
-            //Debug.Log("ball move to : " + targetMove);
+            targetMove = soldierAtt_Chasing.transform.position;
             this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
         }
+        if (indexSoldierAtt_Chasing != -1 && soldierAtt_Chasing == null)
+        {
+            Debug.Log("BallController has error !!!");
+        }
     }
-    
+
     public void HideTheBall()
     {
         this.gameObject.transform.position = new Vector3(99.0f, 99.0f, 99.0f); //move it out of the screen
         targetMove = Vector3.zero;
         curSpeed = 0.0f;
+        indexSoldierAtt_Chasing = -1;
+        soldierAtt_Chasing = null;
     }
 
     public void MoveToNearestAttacker(Vector3 curAttackerPos)
     {
         this.gameObject.transform.position = curAttackerPos;
-        targetMove = FindNearestAttacker();
+        soldierAtt_Chasing = FindNearestAttacker();
         curSpeed = GameManager.Instance.configScripttableObject.ballSpeedAtt;
 
-        if (targetMove == Vector3.zero)
+        if (soldierAtt_Chasing == null)
+        {
+            Debug.Log("BallController cant found any Attacker");
             GameManager.Instance.GameEnd();
+        }
     }
 
-    Vector3 FindNearestAttacker()
+    GameObject FindNearestAttacker()
     {
-        Vector3 found = Vector3.zero;
+        GameObject found = null;
         float minDist = 9999.0f;
         foreach (GameObject soldierAtt in GameManager.Instance.GetSoldiersAtt())
         {
@@ -54,7 +66,7 @@ public class BallController : MonoBehaviour
                 if (dist <= minDist)
                 {
                     minDist = dist;
-                    found = soldierAtt.transform.position;
+                    found = soldierAtt;
                     indexSoldierAtt_Chasing = soldierAtt.GetComponent<SoldierAttacker>().index;
                 }
             }

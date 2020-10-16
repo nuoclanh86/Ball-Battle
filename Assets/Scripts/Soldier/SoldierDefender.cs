@@ -42,6 +42,11 @@ public class SoldierDefender : MonoBehaviour
             targetMove = originalPos;
             collision.gameObject.GetComponent<SoldierAttacker>().PassTheBallToOTher();
         }
+
+        if (collision.gameObject.tag == "Ball")
+        {
+            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), this.GetComponent<Collider>());
+        }
     }
 
     public void SetSoldierInfo(int m_index, Vector3 pos)
