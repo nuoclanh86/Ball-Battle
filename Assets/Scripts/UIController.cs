@@ -69,7 +69,7 @@ public class UIController : MonoBehaviour
     void UpdateEnergy(ref float energyValue, GameObject energyBar, float energyRegeneration)
     {
         if (energyValue < 6.0f)
-            energyValue += (Time.deltaTime* energyRegeneration);
+            energyValue += (Time.deltaTime * energyRegeneration);
 
         float temp = energyValue;
         int i = 0;
@@ -85,5 +85,27 @@ public class UIController : MonoBehaviour
         }
         for (i = 0; i < 6; i++)
             energyBar.transform.GetChild(i).GetComponent<Slider>().value = val[i];
+    }
+
+    public void ShowResultDisplay(GameStates gs)
+    {
+        if (gs == GameStates.AttackerWin)
+        {
+            resultDisplay.SetActive(true);
+            Sprite sp = Resources.Load<Sprite>("Textures/youwin") as Sprite;
+            resultDisplay.GetComponent<Image>().sprite = sp;
+        }
+        else if (gs == GameStates.AttackerLose)
+        {
+            resultDisplay.SetActive(true);
+            Sprite sp = Resources.Load<Sprite>("Textures/youlose") as Sprite;
+            resultDisplay.GetComponent<Image>().sprite = sp;
+        }
+        else // if (gs == GameStates.Draw)
+        {
+            resultDisplay.SetActive(true);
+            Sprite sp = Resources.Load<Sprite>("Textures/draw") as Sprite;
+            resultDisplay.GetComponent<Image>().sprite = sp;
+        }
     }
 }

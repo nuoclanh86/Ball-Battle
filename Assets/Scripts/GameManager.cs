@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && 
+        if (Input.GetMouseButtonDown(0) &&
             (gameState != GameStates.AttackerLose || gameState != GameStates.AttackerWin))
         {
             RaycastHit hit;
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameEnd : " + gs);
         gameState = gs;
-        theBall.gameObject.GetComponent<BallController>().HideTheBall();
+        theBall.GetComponent<BallController>().HideTheBall();
         foreach (GameObject soldierAtt in soldiersAtt)
         {
             if (soldierAtt != null)
@@ -167,5 +167,6 @@ public class GameManager : MonoBehaviour
             if (soldierDef != null)
                 soldierDef.GetComponent<SoldierDefender>().reactivateTime = 99.0f;
         }
+        uiCanVas.GetComponent<UIController>().ShowResultDisplay(gs);
     }
 }
