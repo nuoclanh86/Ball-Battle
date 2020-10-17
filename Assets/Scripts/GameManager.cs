@@ -7,7 +7,8 @@ public enum GameStates
     Idle,
     Playing,
     AttackerLose,
-    AttackerWin
+    AttackerWin,
+    Draw
 }
 
 public class GameManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public GameObject soldierAttPrefab;
     public GameObject soldierDefPrefab;
     public GameObject theBallPrefab;
+    public GameObject uiCanVas;
 
     GameObject theBall;
     GameObject[] soldiersAtt;

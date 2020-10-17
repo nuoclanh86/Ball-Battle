@@ -121,6 +121,26 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &260221317 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8337816637737374740, guid: 62dc84ba0ea618942bd316c3929a0068,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492688610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &260221322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260221317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e28b6032103eb5458aac50e6cacc159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyEnemyValue: 0
+  energyPlayerValue: 0
 --- !u!1 &528219846
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +426,8 @@ MonoBehaviour:
   soldierDefPrefab: {fileID: 7332811918754606923, guid: a4b0eae284956ed46b5ee0a883cec2ab,
     type: 3}
   theBallPrefab: {fileID: 6306694207498365882, guid: 5509ec64e992dd64ab06810b9e69940e,
+    type: 3}
+  uiCanVas: {fileID: 8337816637737374740, guid: 62dc84ba0ea618942bd316c3929a0068,
     type: 3}
   minDistance_Soldier_Ball: 99999
   detectionRangeDefFloat: 0

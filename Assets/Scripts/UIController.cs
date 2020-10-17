@@ -1,0 +1,91 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIController : MonoBehaviour
+{
+    Text txtTimeLeft;
+    float valTimeLeft;
+    GameObject resultDisplay;
+
+    [HideInInspector]
+    public float energyEnemyValue, energyPlayerValue;
+    GameObject energyEnemy, energyPlayer;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        InitUICanvas();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (valTimeLeft > 0)
+        {
+            valTimeLeft -= Time.deltaTime;
+            txtTimeLeft.text = ((int)valTimeLeft).ToString();
+        }
+        else
+        {
+            Debug.Log("Time out . Game end with Draw");
+            GameManager.Instance.GameEnd(GameStates.Draw);
+        }
+
+        //UpdateEnergy(ref energyEnemyValue, energyEnemy);
+    }
+
+    void InitUICanvas()
+    {
+        foreach (Transform child in this.transform)
+        {
+            Debug.Log("child name = " + child.name);
+            if (child.name == "TimePanel")
+            {
+                txtTimeLeft = child.GetChild(0).GetComponent<UnityEngine.UI.Text>();
+                valTimeLeft = GameManager.Instance.configScripttableObject.timeLimit;
+                txtTimeLeft.text = ((int)valTimeLeft).ToString();
+            }
+            else if (child.name == "ResultDisplay")
+            {
+                resultDisplay = child.gameObject;
+                resultDisplay.SetActive(false);
+            }
+            else if (child.name == "EnergyEnemy")
+            {
+                energyEnemy = child.gameObject;
+                energyEnemyValue = 0;
+            }
+            else if (child.name == "EnergyPlayer")
+            {
+                energyPlayer = child.gameObject;
+                energyPlayerValue = 0;
+            }
+        }
+    }
+
+    void UpdateEnergy(ref float energyValue, GameObject energyBar)
+    {
+        if (energyValue < 6.0f)
+            energyValue += Time.deltaTime;
+
+        float temp = energyValue;
+        int i = 0;
+        float[] val = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+        while (temp >= 0.0f)
+        {
+            if (temp >= 1)
+            {
+                val[i] = 1.0f;
+                temp -= 1.0f;
+            }
+            else
+            {
+                val[i] = temp;
+            }
+        }
+        for (i = 0; i < 6; i++)
+            energyBar.transform.GetChild(i).GetComponent<Slider>().value = val[i];
+    }
+}
