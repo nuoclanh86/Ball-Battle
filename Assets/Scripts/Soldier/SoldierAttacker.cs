@@ -14,11 +14,14 @@ public class SoldierAttacker : MonoBehaviour
     [HideInInspector]
     public int index;
 
+    GameObject arrow;
+
     Animator animSpawn;
 
     // Start is called before the first frame update
     void Start()
     {
+        arrow = this.transform.GetChild(1).gameObject;
         InitDefaultValue();
         animSpawn = this.GetComponent<Animator>();
     }
@@ -141,6 +144,16 @@ public class SoldierAttacker : MonoBehaviour
             if (index != GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing)
             {
                 this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
+                arrow.transform.position = Vector3.Lerp(this.transform.position, targetMove, 0.2f);
+                float angle = Vector3.Angle(this.transform.position, targetMove);
+
+
+                // Rotate the cube by converting the angles into a quaternion.
+                Quaternion target = Quaternion.Euler(90.0f, 90.0f, angle);
+                arrow.transform.rotation = target;
+
+
+
             }
         }
         else
