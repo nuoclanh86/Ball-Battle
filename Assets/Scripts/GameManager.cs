@@ -7,7 +7,8 @@ public enum GameStates
     Idle,
     Playing,
     AttackerLose,
-    AttackerWin
+    AttackerWin,
+    Draw
 }
 
 public class GameManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public GameObject soldierAttPrefab;
     public GameObject soldierDefPrefab;
     public GameObject theBallPrefab;
+    public GameObject uiCanVas;
 
     GameObject theBall;
     GameObject[] soldiersAtt;
@@ -66,7 +68,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && 
+        if (Input.GetMouseButtonDown(0) &&
             (gameState != GameStates.AttackerLose || gameState != GameStates.AttackerWin))
         {
             RaycastHit hit;
