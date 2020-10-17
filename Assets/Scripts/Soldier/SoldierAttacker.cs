@@ -14,10 +14,13 @@ public class SoldierAttacker : MonoBehaviour
     [HideInInspector]
     public int index;
 
+    Animator animSpawn;
+
     // Start is called before the first frame update
     void Start()
     {
         InitDefaultValue();
+        animSpawn = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,7 +29,7 @@ public class SoldierAttacker : MonoBehaviour
         SoldierMove();
 
         //for debug
-        this.gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = index + ":" + reactivateTime.ToString("0.0");
+        //this.gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = index + ":" + reactivateTime.ToString("0.0");
     }
 
     private void LateUpdate()
@@ -40,6 +43,7 @@ public class SoldierAttacker : MonoBehaviour
         if (collision.gameObject.tag == "Wall" ||
             (collision.gameObject.tag == "GatebaseR" && isHoldTheBall == false))
         {
+            //animSpawn.SetInteger("status", 2);
             KillSoldiersAtt();
         }
 
@@ -79,6 +83,8 @@ public class SoldierAttacker : MonoBehaviour
         targetMove = GameManager.Instance.GetWallTop().transform.position;
         isHoldTheBall = false;
         this.gameObject.tag = "SoldierAtt";
+        animSpawn = this.GetComponent<Animator>();
+        animSpawn.SetInteger("status", 1);
     }
 
     public void KillSoldiersAtt()
@@ -98,6 +104,7 @@ public class SoldierAttacker : MonoBehaviour
         this.transform.localScale /= 1.5f;
 
         GameManager.Instance.GetTheBall().gameObject.GetComponent<BallController>().MoveToNearestAttacker(this.transform.position);
+        animSpawn.SetInteger("status", 0);
     }
 
     public void SoldiersAttCatchTheBall()
@@ -110,6 +117,7 @@ public class SoldierAttacker : MonoBehaviour
         targetMove = GameManager.Instance.GetGateBaseR().transform.position;
 
         GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing = -1;
+        animSpawn.SetInteger("status", 3);
     }
 
     void SetSoldierMaterial()
@@ -127,6 +135,8 @@ public class SoldierAttacker : MonoBehaviour
     {
         if (reactivateTime <= 0)
         {
+            if(isHoldTheBall == false)
+                animSpawn.SetInteger("status", 0);
             //Debug.Log("index : " + index + "-reactivateTime = " + reactivateTime);
             if (index != GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing)
             {
