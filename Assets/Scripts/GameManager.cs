@@ -119,27 +119,35 @@ public class GameManager : MonoBehaviour
         spawnPos.y = 1.0f; // spawn on the plane
         if (spawnPos.z < wallMid.transform.position.z)
         {
-            for (i = 0; i < configScripttableObject.maxArray; i++)
+            if (uiCanVas.GetComponent<UIController>().energyPlayerValue > this.configScripttableObject.energyCostAtt)
             {
-                if (soldiersAtt[i] == null)
+                for (i = 0; i < configScripttableObject.maxArray; i++)
                 {
-                    break;
+                    if (soldiersAtt[i] == null)
+                    {
+                        break;
+                    }
                 }
+                soldiersAtt[i] = soldierAttPrefab.Spawn(spawnPos);
+                soldiersAtt[i].GetComponent<SoldierAttacker>().SetSoldierInfo(i);
+                uiCanVas.GetComponent<UIController>().energyPlayerValue -= this.configScripttableObject.energyCostAtt;
             }
-            soldiersAtt[i] = soldierAttPrefab.Spawn(spawnPos);
-            soldiersAtt[i].gameObject.GetComponent<SoldierAttacker>().SetSoldierInfo(i);
         }
         else
         {
-            for (i = 0; i < configScripttableObject.maxArray; i++)
+            if (uiCanVas.GetComponent<UIController>().energyEnemyValue > this.configScripttableObject.energyCostDef)
             {
-                if (soldiersDef[i] == null)
+                for (i = 0; i < configScripttableObject.maxArray; i++)
                 {
-                    break;
+                    if (soldiersDef[i] == null)
+                    {
+                        break;
+                    }
                 }
+                soldiersDef[i] = soldierDefPrefab.Spawn(spawnPos);
+                soldiersDef[i].gameObject.GetComponent<SoldierDefender>().SetSoldierInfo(i, soldiersDef[i].transform.position);
+                uiCanVas.GetComponent<UIController>().energyEnemyValue -= this.configScripttableObject.energyCostDef;
             }
-            soldiersDef[i] = soldierDefPrefab.Spawn(spawnPos);
-            soldiersDef[i].gameObject.GetComponent<SoldierDefender>().SetSoldierInfo(i, soldiersDef[i].transform.position);
         }
         gameState = GameStates.Playing;
     }

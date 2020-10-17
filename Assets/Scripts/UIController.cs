@@ -33,14 +33,15 @@ public class UIController : MonoBehaviour
             GameManager.Instance.GameEnd(GameStates.Draw);
         }
 
-        //UpdateEnergy(ref energyEnemyValue, energyEnemy);
+        UpdateEnergy(ref energyPlayerValue, energyPlayer, GameManager.Instance.configScripttableObject.energyRegenerationAtt);
+        UpdateEnergy(ref energyEnemyValue, energyEnemy, GameManager.Instance.configScripttableObject.energyRegenerationDef);
     }
 
     void InitUICanvas()
     {
         foreach (Transform child in this.transform)
         {
-            Debug.Log("child name = " + child.name);
+            //Debug.Log("child name = " + child.name);
             if (child.name == "TimePanel")
             {
                 txtTimeLeft = child.GetChild(0).GetComponent<UnityEngine.UI.Text>();
@@ -65,25 +66,22 @@ public class UIController : MonoBehaviour
         }
     }
 
-    void UpdateEnergy(ref float energyValue, GameObject energyBar)
+    void UpdateEnergy(ref float energyValue, GameObject energyBar, float energyRegeneration)
     {
         if (energyValue < 6.0f)
-            energyValue += Time.deltaTime;
+            energyValue += (Time.deltaTime* energyRegeneration);
 
         float temp = energyValue;
         int i = 0;
         float[] val = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
-        while (temp >= 0.0f)
+        while (temp >= 0.0f && i < 6)
         {
             if (temp >= 1)
-            {
                 val[i] = 1.0f;
-                temp -= 1.0f;
-            }
             else
-            {
                 val[i] = temp;
-            }
+            temp -= 1.0f;
+            i++;
         }
         for (i = 0; i < 6; i++)
             energyBar.transform.GetChild(i).GetComponent<Slider>().value = val[i];
