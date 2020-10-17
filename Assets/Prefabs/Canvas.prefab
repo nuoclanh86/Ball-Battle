@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12941177, g: 0.69803923, b: 0.5921569, a: 1}
+  m_Color: {r: 0.9150943, g: 0.18560876, b: 0.18560876, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1254902, g: 0.67058825, b: 0.5686275, a: 1}
+  m_Color: {r: 0.9150943, g: 0.18560876, b: 0.18560876, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -975,7 +975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14117648, g: 0.78823537, b: 0.6666667, a: 1}
+  m_Color: {r: 0.9150943, g: 0.18560876, b: 0.18560876, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2044,7 +2044,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 140
+  m_Text: 999
 --- !u!1 &8337816636675296080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2252,7 +2252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14324492, g: 0.8207547, b: 0.69508606, a: 1}
+  m_Color: {r: 0.9150943, g: 0.18560876, b: 0.18560876, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2596,7 +2596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.13725491, g: 0.7568628, b: 0.6392157, a: 1}
+  m_Color: {r: 0.9150943, g: 0.18560876, b: 0.18560876, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3549,7 +3549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.13333334, g: 0.7254902, b: 0.6156863, a: 1}
+  m_Color: {r: 0.9150943, g: 0.18560876, b: 0.18560876, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3946,7 +3946,6 @@ GameObject:
   - component: {fileID: 8337816637737374743}
   - component: {fileID: 8337816637737374742}
   - component: {fileID: 8337816637737374741}
-  - component: {fileID: 300778054}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4040,20 +4039,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &300778054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8337816637737374740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b9345c4bd58cb4282997367e1070b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energyEnemyValue: 0
-  energyPlayerValue: 0
 --- !u!1 &8337816637843360964
 GameObject:
   m_ObjectHideFlags: 0
