@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0) &&
-            (gameState != GameStates.AttackerLose || gameState != GameStates.AttackerWin))
+            (gameState != GameStates.AttackerLose || gameState != GameStates.AttackerWin || gameState != GameStates.Draw))
         {
             RaycastHit hit;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -168,5 +168,24 @@ public class GameManager : MonoBehaviour
                 soldierDef.GetComponent<SoldierDefender>().reactivateTime = 99.0f;
         }
         uiCanVas.GetComponent<UIController>().ShowResultDisplay(gs);
+    }
+
+    public void ChangeToMaze()
+    {
+        Debug.Log("ChangeToMaze");
+        foreach (GameObject soldierAtt in soldiersAtt)
+        {
+            if (soldierAtt != null)
+                soldierAtt.Kill();
+        }
+        foreach (GameObject soldierDef in soldiersDef)
+        {
+            if (soldierDef != null)
+                soldierDef.Kill();
+        }
+        uiCanVas.SetActive(false);
+        theBall.SetActive(false);
+        wallMid.SetActive(false);
+        gameState = GameStates.Draw;
     }
 }
