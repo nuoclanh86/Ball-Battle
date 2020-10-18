@@ -145,15 +145,10 @@ public class SoldierAttacker : MonoBehaviour
             {
                 this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
                 arrow.transform.position = Vector3.Lerp(this.transform.position, targetMove, 0.2f);
-                float angle = Vector3.Angle(this.transform.position, targetMove);
 
-
-                // Rotate the cube by converting the angles into a quaternion.
-                Quaternion target = Quaternion.Euler(90.0f, 90.0f, angle);
-                arrow.transform.rotation = target;
-
-
-
+                //float angle = Vector3.Angle(this.transform.position, targetMove);
+                //Vector3 newDirection = Vector3.RotateTowards(arrow.transform.position, targetMove, Time.deltaTime * 1.0f, 0.0f);
+                //arrow.transform.rotation = Quaternion.LookRotation(newDirection);
             }
         }
         else

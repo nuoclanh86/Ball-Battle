@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         spawnPos.y = 1.0f; // spawn on the plane
         if (spawnPos.z < wallMid.transform.position.z)
         {
-            //if (uiCanVas.GetComponent<UIController>().energyPlayerValue > this.configScripttableObject.energyCostAtt)
+            if (uiCanVas.GetComponent<UIController>().energyPlayerValue > this.configScripttableObject.energyCostAtt)
             {
                 for (i = 0; i < configScripttableObject.maxArray; i++)
                 {
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
                 }
                 soldiersAtt[i] = soldierAttPrefab.Spawn(spawnPos);
                 soldiersAtt[i].GetComponent<SoldierAttacker>().SetSoldierInfo(i);
-                //uiCanVas.GetComponent<UIController>().energyPlayerValue -= this.configScripttableObject.energyCostAtt;
+                uiCanVas.GetComponent<UIController>().energyPlayerValue -= this.configScripttableObject.energyCostAtt;
             }
         }
         else
