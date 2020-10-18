@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     public GameObject theBallPrefab;
     public GameObject uiCanVas;
 
+    public GameObject mazeLoader;
+
     GameObject theBall;
     GameObject[] soldiersAtt;
     GameObject[] soldiersDef;
@@ -187,5 +189,7 @@ public class GameManager : MonoBehaviour
         theBall.SetActive(false);
         wallMid.SetActive(false);
         gameState = GameStates.Draw;
+
+        mazeLoader.GetComponent<MazeLoader>().CreateMaze();
     }
 }
