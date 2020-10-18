@@ -6,7 +6,7 @@ public class MazeLoader : MonoBehaviour {
 	public GameObject wall;
 	public float size = 2f;
 
-	private MazeCell[,] mazeCells;
+    private MazeCell[,] mazeCells;
 
     // Use this for initialization
     //void Start()
@@ -23,6 +23,7 @@ public class MazeLoader : MonoBehaviour {
 
         MazeAlgorithm ma = new HuntAndKillMazeAlgorithm(mazeCells);
         ma.CreateMaze();
+
         //nuoclanh cheat
         this.transform.localScale /= 5.0f;
         this.transform.position = new Vector3(-2.95f, 0.0f, -5.45f);

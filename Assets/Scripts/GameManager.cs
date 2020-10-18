@@ -186,10 +186,16 @@ public class GameManager : MonoBehaviour
                 soldierDef.Kill();
         }
         uiCanVas.SetActive(false);
-        theBall.SetActive(false);
         wallMid.SetActive(false);
         gameState = GameStates.Draw;
 
         mazeLoader.GetComponent<MazeLoader>().CreateMaze();
+        float deltaRange = 2.5f; // do not spawn too nearly walls
+        float ran_x = Random.Range(wallLeft.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
+        float ran_z = Random.Range(-wallTop.transform.position.z + deltaRange, 0.0f - deltaRange);
+        theBall.transform.position = new Vector3(ran_x, 0.5f, ran_z);
+        ran_x = Random.Range(wallLeft.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
+        ran_z = Random.Range(-wallTop.transform.position.z + deltaRange, 0.0f - deltaRange);
+        GameObject soldiersInMaze = soldierAttPrefab.Spawn(new Vector3(ran_x, 2.5f, ran_z));
     }
 }
