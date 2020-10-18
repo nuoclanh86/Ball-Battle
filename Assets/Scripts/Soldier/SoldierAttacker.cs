@@ -138,18 +138,18 @@ public class SoldierAttacker : MonoBehaviour
     {
         if (reactivateTime <= 0)
         {
-            if(isHoldTheBall == false)
+            if (isHoldTheBall == false)
                 animSpawn.SetInteger("status", 0);
             //Debug.Log("index : " + index + "-reactivateTime = " + reactivateTime);
             if (index != GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing)
             {
                 this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
-                arrow.transform.position = Vector3.Lerp(this.transform.position, targetMove, 0.2f);
-
-                //float angle = Vector3.Angle(this.transform.position, targetMove);
-                //Vector3 newDirection = Vector3.RotateTowards(arrow.transform.position, targetMove, Time.deltaTime * 1.0f, 0.0f);
-                //arrow.transform.rotation = Quaternion.LookRotation(newDirection);
             }
+            arrow.transform.position = Vector3.Lerp(this.transform.position, targetMove, 0.2f);
+            float angle = Vector3.Angle(this.transform.position, targetMove);
+            Vector3 newDirection = new Vector3(90.0f, 0.0f, angle);
+            arrow.transform.rotation = Quaternion.Euler(newDirection);
+            //Debug.Log("newDirection=" + newDirection + " - " + arrow.transform.rotation);
         }
         else
         {
