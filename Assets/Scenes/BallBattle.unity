@@ -680,6 +680,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374742, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374742, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374742, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374742, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374743, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374743, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8337816637737374744, guid: 62dc84ba0ea618942bd316c3929a0068,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -783,6 +813,21 @@ PrefabInstance:
     - target: {fileID: 8337816637737374744, guid: 62dc84ba0ea618942bd316c3929a0068,
         type: 3}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374744, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374744, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337816637737374744, guid: 62dc84ba0ea618942bd316c3929a0068,
+        type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
