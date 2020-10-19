@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameStates
 {
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     public GameObject soldierDefPrefab;
     public GameObject theBallPrefab;
     public GameObject uiCanVas;
+
+    bool isInAR = false;
 
     public GameObject mazeLoader;
 
@@ -65,6 +68,8 @@ public class GameManager : MonoBehaviour
         detectionRangeDefFloat = configScripttableObject.detectionRangeDef * Vector3.Distance(wallLeft.transform.position, wallRight.transform.position);
 
         gameState = GameStates.Idle;
+
+        isInAR = false;
     }
 
     // Update is called once per frame
@@ -197,5 +202,20 @@ public class GameManager : MonoBehaviour
         ran_x = Random.Range(wallLeft.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
         ran_z = Random.Range(-wallTop.transform.position.z + deltaRange, 0.0f - deltaRange);
         GameObject soldiersInMaze = soldierAttPrefab.Spawn(new Vector3(ran_x, 2.5f, ran_z));
+    }
+
+    public void ChangeToAR()
+    {
+        Debug.Log("ChangeToAR");
+        if (isInAR == true)
+        {
+            SceneManager.LoadScene(0);
+            isInAR = false;
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+            isInAR = true;
+        }
     }
 }

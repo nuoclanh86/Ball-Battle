@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BallBattle.unity
     guid: f7f1c3613e9839e4fa6d2f739de0b163
+  - enabled: 1
+    path: Assets/Scenes/BallBattleAR.unity
+    guid: a93db0c13608d19418b630c4df0d7609
   m_configObjects: {}
