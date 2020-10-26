@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     public GameObject uiCanVas;
 
     bool isInAR = false;
+    [HideInInspector]
+    public bool isInMaze = false;
 
     public GameObject mazeLoader;
 
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
         gameState = GameStates.Idle;
 
         isInAR = false;
+        isInMaze = false;
     }
 
     // Update is called once per frame
@@ -197,11 +200,12 @@ public class GameManager : MonoBehaviour
         mazeLoader.GetComponent<MazeLoader>().CreateMaze();
         float deltaRange = 2.5f; // do not spawn too nearly walls
         float ran_x = Random.Range(wallLeft.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
-        float ran_z = Random.Range(-wallTop.transform.position.z + deltaRange, 0.0f - deltaRange);
+        float ran_z = Random.Range(0.0f + deltaRange, wallTop.transform.position.z - deltaRange);
         theBall.transform.position = new Vector3(ran_x, 0.5f, ran_z);
         ran_x = Random.Range(wallLeft.transform.position.x + deltaRange, wallRight.transform.position.x - deltaRange);
         ran_z = Random.Range(-wallTop.transform.position.z + deltaRange, 0.0f - deltaRange);
         GameObject soldiersInMaze = soldierAttPrefab.Spawn(new Vector3(ran_x, 2.5f, ran_z));
+        isInMaze = true;
     }
 
     public void ChangeToAR()

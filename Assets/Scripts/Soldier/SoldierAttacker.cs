@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SoldierAttacker : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class SoldierAttacker : MonoBehaviour
     GameObject arrow;
 
     Animator animSpawn;
+    NavMeshAgent navAgentPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,7 @@ public class SoldierAttacker : MonoBehaviour
         arrow = this.transform.GetChild(1).gameObject;
         InitDefaultValue();
         animSpawn = this.GetComponent<Animator>();
+        navAgentPlayer = this.GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -136,38 +139,45 @@ public class SoldierAttacker : MonoBehaviour
 
     void SoldierMove()
     {
-        if (reactivateTime <= 0)
+        if (GameManager.Instance.isInMaze == true)
         {
-            if (isHoldTheBall == false)
-                animSpawn.SetInteger("status", 0);
-            //Debug.Log("index : " + index + "-reactivateTime = " + reactivateTime);
-            if (index != GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing)
-            {
-                this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
-            }
-            arrow.transform.position = Vector3.Lerp(this.transform.position, targetMove, 0.2f);
-            float angle = Vector3.Angle(this.transform.position, targetMove);
-            Vector3 newDirection = new Vector3(90.0f, 0.0f, angle);
-            arrow.transform.rotation = Quaternion.Euler(newDirection);
-            //Debug.Log("newDirection=" + newDirection + " - " + arrow.transform.rotation);
+            navAgentPlayer.destination = GameManager.Instance.GetTheBall().transform.position;
         }
         else
         {
-            reactivateTime -= Time.deltaTime;
-        }
-
-        if (reactivateTime <= 0 && isHoldTheBall == false)
-        {
-            float dist = Vector3.Distance(this.transform.position, GameManager.Instance.GetTheBall().transform.position);
-            if (dist <= GameManager.Instance.minDistance_Soldier_Ball)
+            if (reactivateTime <= 0)
             {
-                GameManager.Instance.SetMinDistanceSoldierBall(dist);
-                targetMove = GameManager.Instance.GetTheBall().transform.position;
+                if (isHoldTheBall == false)
+                    animSpawn.SetInteger("status", 0);
+                //Debug.Log("index : " + index + "-reactivateTime = " + reactivateTime);
+                if (index != GameManager.Instance.GetTheBall().GetComponent<BallController>().indexSoldierAtt_Chasing)
+                {
+                    this.transform.position = Vector3.MoveTowards(this.transform.position, targetMove, curSpeed * Time.deltaTime);
+                }
+                arrow.transform.position = Vector3.Lerp(this.transform.position, targetMove, 0.2f);
+                float angle = Vector3.Angle(this.transform.position, targetMove);
+                Vector3 newDirection = new Vector3(90.0f, 0.0f, angle);
+                arrow.transform.rotation = Quaternion.Euler(newDirection);
+                //Debug.Log("newDirection=" + newDirection + " - " + arrow.transform.rotation);
             }
             else
             {
-                targetMove = GameManager.Instance.GetWallTop().transform.position;
-                targetMove.x = this.transform.position.x; // go straight to the wall
+                reactivateTime -= Time.deltaTime;
+            }
+
+            if (reactivateTime <= 0 && isHoldTheBall == false)
+            {
+                float dist = Vector3.Distance(this.transform.position, GameManager.Instance.GetTheBall().transform.position);
+                if (dist <= GameManager.Instance.minDistance_Soldier_Ball)
+                {
+                    GameManager.Instance.SetMinDistanceSoldierBall(dist);
+                    targetMove = GameManager.Instance.GetTheBall().transform.position;
+                }
+                else
+                {
+                    targetMove = GameManager.Instance.GetWallTop().transform.position;
+                    targetMove.x = this.transform.position.x; // go straight to the wall
+                }
             }
         }
     }
