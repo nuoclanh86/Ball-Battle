@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.1
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -114,13 +114,13 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.033333335
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 17b59795530eb49409f5d0724c176897, type: 2}
 --- !u!1 &377463876
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,16 +363,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleField
       objectReference: {fileID: 0}
-    - target: {fileID: 7289373435467284693, guid: 6314a5d8baf5b364c89dc9cd4f3a6985,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9062669550064748506, guid: 6314a5d8baf5b364c89dc9cd4f3a6985,
-        type: 3}
-      propertyPath: m_TagString
-      value: GatebaseR
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6314a5d8baf5b364c89dc9cd4f3a6985, type: 3}
 --- !u!1 &1012440103 stripped
@@ -531,6 +521,7 @@ MonoBehaviour:
   theBallPrefab: {fileID: 6306694207498365882, guid: 5509ec64e992dd64ab06810b9e69940e,
     type: 3}
   uiCanVas: {fileID: 1872330848}
+  isInMaze: 0
   mazeLoader: {fileID: 377463876}
   minDistance_Soldier_Ball: 99999
   detectionRangeDefFloat: 0
